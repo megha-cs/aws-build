@@ -47,50 +47,7 @@ resource "aws_security_group" "public_SG" {
   }
 } 
 
-resource "aws_security_group" "private_SG" {
-  name = "private SG"
-  vpc_id = "${var.vpc_id}"
 
-  # SSH access from the VPC
-  ingress {
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      cidr_blocks = "${var.public_subnet}"
-  }
- # Mysql access
-  ingress {
-    from_port   = 3306
-    to_port     = 3306
-    protocol    = "tcp"
-    cidr_blocks = "${var.private_subnet}"
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 65535
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-resource "aws_security_group" "db_SG" {
-  name = "db SG"
-  vpc_id = "${var.vpc_id}"
-
-  # mysql access
-  ingress {
-      from_port   = 3306
-      to_port     = 3306
-      protocol    = "tcp"
-      cidr_blocks = "${var.public_subnet}"
-  }
-  egress {
-    from_port   = 0
-    to_port     = 65535
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
 
 
 
